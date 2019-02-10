@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var div1 = document.createElement("div");
     div1.className = "w3-col m6";
     document.getElementById("body").appendChild(div1);
+
     var div2 = document.createElement("div");
     div2.className = "w3-container w3-center";
     div1.appendChild(div2);
@@ -56,17 +57,79 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var pizzaBtn = document.createElement("button");
     pizzaBtn.className = "w3-btn w3-white w3-margin-bottom";
-    // pizzaBtn.id = "btn" + idNumber;
-    // var btnId = "btn" + idNumber;
-    // pizzaBtn.onclick = "console.log('hoi haha')";
+    pizzaBtn.id = "pizza-btn" + idNumber;
+    pizzaBtn.onclick = function openModal() { // not finished ------------------------------------------------------------
+      if (this.id === "pizza-btn1") {
+        document.getElementById("modal-box1").style.display = 'block';
+      } else if (this.id === "pizza-btn2") {
+        document.getElementById("modal-box2").style.display = 'block';
+      } else if (this.id === "pizza-btn3") {
+        document.getElementById("modal-box3").style.display = 'block';
+      } else {
+        document.getElementById("modal-box4").style.display = 'block';
+      }
+    };
     pizzaBtn.innerHTML = "Meer info en bestellen";
     div2.appendChild(pizzaBtn);
 
-    // var headerTextModal = "document.getElementById('pizzaheader" + idNumber + "modal').innerHTML = " + "\'" + pizzasarray.name + "\'";
+    var modalBox = document.createElement("div");
+    modalBox.id = "modal-box" + idNumber;
+    modalBox.className = "w3-modal";
+    document.getElementById("body").appendChild(modalBox);
+
+    var modalContentBox = document.createElement("div");
+    modalContentBox.className = "w3-modal-content";
+    modalBox.appendChild(modalContentBox);
+
+    var modalContainer = document.createElement("div");
+    modalContainer.className = "w3-container w3-col m6 w3-white";
+    modalContentBox.appendChild(modalContainer);
+
+    var modalContainer2 = document.createElement("div");
+    modalContainer2.className = "w3-container w3-col m6 w3-white";
+    var priceHeader = document.createElement("h3");
+    priceHeader.innerHTML = "Totaalprijs pizza";
+    modalContainer2.appendChild(priceHeader);
+    var priceShow = document.createElement("p");
+    var totalPrice = pizzasarray.price;
+    priceShow.innerHTML = "€ " + totalPrice;
+    modalContainer2.appendChild(priceShow);
+    modalContentBox.appendChild(modalContainer2);
+
+    var closeModal = document.createElement("span");
+    closeModal.className = "w3-button w3-display-topright";
+    closeModal.id = "close-btn" + idNumber;
+    closeModal.onclick = function closeModal() { // not finished ---------------------------------------------------------
+      if (this.id === "close-btn1") {
+        document.getElementById("modal-box1").style.display = 'none';
+      } else if (this.id === "close-btn2") {
+        document.getElementById("modal-box2").style.display = 'none';
+      } else if (this.id === "close-btn3") {
+        document.getElementById("modal-box3").style.display = 'none';
+      } else {
+        document.getElementById("modal-box4").style.display = 'none';
+      }
+    };
+    closeModal.innerHTML = "&times;";
+    modalContentBox.appendChild(closeModal);
+
+    var modalHeader = document.createElement("h2");
+    modalHeader.id = "pizzaheader" + idNumber + "modal";
+    var headerTextModal = "document.getElementById('pizzaheader" + idNumber + "modal').innerHTML = " + "\'" + pizzasarray.name + "\'";
+    modalContainer.appendChild(modalHeader);
+
+    var modalHeaderToppings = document.createElement("h3");
+    modalHeaderToppings.innerHTML = "Toppings";
+    modalContainer.appendChild(modalHeaderToppings);
+
+    var modalToppings = document.createElement("div");
+    modalToppings.id = "modal-toppings" + idNumber;
+    modalToppings.style = "margin-bottom:24px;";
+    modalContainer.appendChild(modalToppings);
 
     eval(headerText);
     eval(pizzaPrice);
-    // eval(headerTextModal);
+    eval(headerTextModal);
     eval(imageSRC);
   }
 
@@ -100,23 +163,30 @@ document.addEventListener("DOMContentLoaded", function() {
 // -----------------------------------------------------------------------------------------------------------------------
 // Show toppings in the modal boxes --------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------
-//   for (let i = 0; i < toppings.length; i++) {
-//     const toppingsarray = toppings[i];
+  for (let i = 0; i < toppings.length; i++) {
+    const toppingsarray = toppings[i];
 
-//     var checkbox = document.createElement("input");
-//     checkbox.type = "checkbox";
-//     checkbox.className = "w3-check";
-//     checkbox.id = "checkbox0" + i;
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "w3-check";
+    checkbox.id = "checkbox0" + i;
+    checkbox.value = toppingsarray.price;
+    checkbox.onchange = function checkTotal() {
+      console.log("WTF");
+    };
 
-//     var label = document.createElement("label");
-//     var tn = " " + toppingsarray.name + " + € " + toppingsarray.price;
-//     label.id = "label0" + i;
-//     label.appendChild(document.createTextNode(tn));
+    var label = document.createElement("label");
+    var tn = " " + toppingsarray.name + " + € " + toppingsarray.price;
+    label.id = "label0" + i;
+    label.appendChild(document.createTextNode(tn));
+    var br = document.createElement("br");
+    label.appendChild(br);
 
-//     document.getElementById("modal-toppings1").appendChild(checkbox);
-//     document.getElementById("modal-toppings1").appendChild(label);
-
-//     var br = document.createElement("br");
-//     label.appendChild(br);  
-//   }
+    for (let i = 1; i <= 4; i++) {
+      var checkboxList = "document.getElementById('modal-toppings" + i + "').appendChild(checkbox.cloneNode())";
+      var labelList = "document.getElementById('modal-toppings" + i + "').appendChild(label.cloneNode(true))";
+      eval(checkboxList);
+      eval(labelList);
+    }
+  }
 });
