@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var pizzaBtn = document.createElement("button");
     pizzaBtn.className = "w3-btn w3-white w3-margin-bottom";
     pizzaBtn.id = "pizza-btn" + idNumber;
-    pizzaBtn.onclick = function openModal() { // not finished ------------------------------------------------------------
+    pizzaBtn.onclick = function openModal() {
       if (this.id === "pizza-btn1") {
         document.getElementById("modal-box1").style.display = 'block';
       } else if (this.id === "pizza-btn2") {
@@ -82,24 +82,37 @@ document.addEventListener("DOMContentLoaded", function() {
     modalBox.appendChild(modalContentBox);
 
     var modalContainer = document.createElement("div");
+    modalContainer.id = "modalcontainer-left";
     modalContainer.className = "w3-container w3-col m6 w3-white";
     modalContentBox.appendChild(modalContainer);
 
     var modalContainer2 = document.createElement("div");
+    modalContainer2.id = "modalcontainer-right" + idNumber;
     modalContainer2.className = "w3-container w3-col m6 w3-white";
-    var priceHeader = document.createElement("h3");
-    priceHeader.innerHTML = "Totaalprijs pizza";
-    modalContainer2.appendChild(priceHeader);
-    var priceShow = document.createElement("p");
-    var totalPrice = pizzasarray.price;
-    priceShow.innerHTML = "€ " + totalPrice;
-    modalContainer2.appendChild(priceShow);
     modalContentBox.appendChild(modalContainer2);
+    modalContainer2.style = "padding-top:55px;";
+   
+   var chooseSlices = document.createElement("h3");
+   chooseSlices.innerHTML = "Slices";
+   modalContainer2.appendChild(chooseSlices);
+   var slicingForm = document.createElement("form");
+   slicingForm.id = "form" + idNumber;
+   slicingForm.style = "padding-top:5px;";
+   modalContainer2.appendChild(slicingForm);
+
+    // var priceHeader = document.createElement("h3");
+    // priceHeader.innerHTML = "Totaalprijs pizza";
+    // modalContainer2.appendChild(priceHeader);
+    // var priceShow = document.createElement("p");
+    // var totalPrice = pizzasarray.price;
+    // priceShow.innerHTML = "€ " + totalPrice;
+    // modalContainer2.appendChild(priceShow);
+    // modalContentBox.appendChild(modalContainer2);
 
     var closeModal = document.createElement("span");
     closeModal.className = "w3-button w3-display-topright";
     closeModal.id = "close-btn" + idNumber;
-    closeModal.onclick = function closeModal() { // not finished ---------------------------------------------------------
+    closeModal.onclick = function closeModal() {
       if (this.id === "close-btn1") {
         document.getElementById("modal-box1").style.display = 'none';
       } else if (this.id === "close-btn2") {
@@ -115,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var modalHeader = document.createElement("h2");
     modalHeader.id = "pizzaheader" + idNumber + "modal";
+    modalHeader.style = "width:150%;";
     var headerTextModal = "document.getElementById('pizzaheader" + idNumber + "modal').innerHTML = " + "\'" + pizzasarray.name + "\'";
     modalContainer.appendChild(modalHeader);
 
@@ -132,6 +146,55 @@ document.addEventListener("DOMContentLoaded", function() {
     eval(headerTextModal);
     eval(imageSRC);
   }
+
+  var slices = [
+    {
+      name: " Ongedeeld",
+      price: 0.00
+    },
+    {
+      name: " 2 stukken",
+      price: 0.20
+    },
+    {
+      name: " 4 stukken",
+      price: 0.40
+    },
+    {
+      name: " 6 stukken",
+      price: 0.60
+    },
+    {
+      name: " 8 stukken",
+      price: 0.80
+    }
+  ];
+
+  // for (let i = 0; i < slices.length; i++) {
+  //   const slicesarray = slices[i];
+  //   var iD = i + 1;
+
+  //   var slicing = document.createElement("input");
+  //   slicing.name = "slicing";
+  //   slicing.type = "radio";
+  //   slicing.style = "width:24px;height:24px;display:inline-block;";
+  //   slicing.value = slicesarray.price;
+  //   // slicingForm.appendChild(slicing);
+
+  //   var slicingText = document.createElement("label");
+  //   slicingText.style = "display:inline-block;width:90%;";
+  //   slicingText.id = "slicing" + iD;
+  //   var tn = slicesarray.name + " (+ € " + slicesarray.price + ")";
+  //   slicingText.appendChild(document.createTextNode(tn));
+  //   // slicingForm.appendChild(slicingText);
+
+  //   for (let i = 1; i <= 4; i++) {
+  //     var slicingList = "document.getElementById('form" + i + "')appendChild(slicing.cloneNode())";
+  //     var slicingTextList = "document.getElementById('form" + i + "')appendChild(slicingText.cloneNode())";
+  //     eval(slicingList);
+  //     eval(slicingTextList);
+  //   }
+  // }
 
   var toppings = [
     {
@@ -176,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     var label = document.createElement("label");
-    var tn = " " + toppingsarray.name + " + € " + toppingsarray.price;
+    var tn = " " + toppingsarray.name + " (+ € " + toppingsarray.price + ")";
     label.id = "label0" + i;
     label.appendChild(document.createTextNode(tn));
     var br = document.createElement("br");
